@@ -17,8 +17,9 @@ class CrazyCell: UITableViewCell {
     
     @IBOutlet weak var gradeOutlet: UILabel!
     
-    @IBOutlet weak var boatOutlet: UILabel!
     
+    
+    @IBOutlet weak var boatOutlet2: UILabel!
     
     
     

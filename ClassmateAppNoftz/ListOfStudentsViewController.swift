@@ -11,7 +11,11 @@ class ListOfStudentsViewController: UIViewController, UITableViewDelegate, UITab
         
     @IBOutlet weak var tableViewOutlet: UITableView!
     
+    @IBOutlet weak var errorLabel2: UILabel!
     
+    
+    var selectedPerson: Classmate!
+    var selectedIndex = -1
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,28 +29,47 @@ class ListOfStudentsViewController: UIViewController, UITableViewDelegate, UITab
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AppData.classmatesNames.count
+        return AppData.classmates.count
     }
     
     
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell") as! CrazyCell
         
-        cell.nameOutlet.text = AppData.classmates[indexPath.row].realName
-        cell.nicknameOutlet.text = AppData.classmates[indexPath.row].nickname
-        cell.gradeOutlet.text = Int(AppData.classmates[indexPath.row].grade)
-        cell.boatOutlet.text = AppData.classmates[indexPath.row].boat
+        cell.nameOutlet.text = "Name: \(AppData.classmates[indexPath.row].realName)"
+        cell.nicknameOutlet.text = "Nickname: \(AppData.classmates[indexPath.row].nickname)"
+        cell.gradeOutlet.text = "Grade: \(AppData.classmates[indexPath.row].grade)"
+        cell.boatOutlet2.text = "Boat: \(AppData.classmates[indexPath.row].boat)"
+        
         return cell
 
     }
 
     
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        print(AppData.classmates[indexPath.row])
+        selectedPerson = AppData.classmates[indexPath.row]
+        selectedIndex = indexPath.row
+        print(selectedIndex)
+        
+    }
     
     
-    
+    @IBAction func deleteStudentAction(_ sender: UIButton) {
+        if selectedIndex == -1 {
+            errorLabel2.text = "Select a student!"
+        } else {
+            AppData.classmates.remove(at: selectedIndex)
+            tableViewOutlet.reloadData()
+        }
+        selectedIndex = -1
+        
+    }
     
     
     
