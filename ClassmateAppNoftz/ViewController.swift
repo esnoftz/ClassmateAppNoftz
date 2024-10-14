@@ -8,6 +8,7 @@
 class AppData {
     static var classmates = [Classmate]()
     static var classmatesNames = [String]()
+    static var selectedIndex = -1
 }
 
 

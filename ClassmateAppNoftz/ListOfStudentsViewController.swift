@@ -15,7 +15,6 @@ class ListOfStudentsViewController: UIViewController, UITableViewDelegate, UITab
     
     
     var selectedPerson: Classmate!
-    var selectedIndex = -1
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +25,9 @@ class ListOfStudentsViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        tableViewOutlet.reloadData()
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return AppData.classmates.count
@@ -54,22 +55,25 @@ class ListOfStudentsViewController: UIViewController, UITableViewDelegate, UITab
         
         print(AppData.classmates[indexPath.row])
         selectedPerson = AppData.classmates[indexPath.row]
-        selectedIndex = indexPath.row
-        print(selectedIndex)
+        AppData.selectedIndex = indexPath.row
+        print(AppData.selectedIndex)
         
     }
     
     
     @IBAction func deleteStudentAction(_ sender: UIButton) {
-        if selectedIndex == -1 {
+        if AppData.selectedIndex == -1 {
             errorLabel2.text = "Select a student!"
         } else {
-            AppData.classmates.remove(at: selectedIndex)
+            AppData.classmates.remove(at: AppData.selectedIndex)
             tableViewOutlet.reloadData()
+            errorLabel2.text = ""
         }
-        selectedIndex = -1
+        AppData.selectedIndex = -1
         
     }
+    
+    
     
     
     
